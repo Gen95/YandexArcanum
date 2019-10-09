@@ -1,0 +1,49 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex: 1;
+  
+    &__content {
+      box-sizing: border-box;
+      flex: 1;
+      padding: 0 16px 12px;
+  
+      @media (min-width: var(--screen-md)) {
+        padding: 0 35px 12px;
+      }
+    }
+  
+    &__header {
+      border-bottom: 1px solid var(--border-color);
+      box-sizing: border-box;
+      padding: 16px 0 0 16px;
+      @media (min-width: var(--screen-md)) {
+        padding: 16px 0 0 35px;
+      }
+    }
+  
+    &__readme {
+      margin-top: 16px;
+    }
+  
+    &__path {
+      border-bottom: #f2f2f2 solid 1px;
+      margin-bottom: 0;
+      width: 100%;
+      padding: 10px 16px 12px;
+    }
+
+    &__info {
+      padding: 0 16px 12px;
+    }
+  
+    &__tabs {
+      display: flex;
+      margin-bottom: 16px;
+    }
+  
+    &__footer {
+      border-top: 1px solid var(--border-color);
+    }
+  }

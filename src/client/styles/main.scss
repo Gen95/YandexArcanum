@@ -1,0 +1,32 @@
+@import 'vars';
+@import '../components/breadcrumbs/styles';
+@import '../components/button/styles';
+@import '../components/code/styles';
+@import '../components/commit-history/styles';
+@import '../components/committer/styles';
+@import '../components/footer/styles';
+@import '../components/header/styles';
+@import '../components/link/styles';
+@import '../components/page-layout/styles';
+@import '../components/repository-head/styles';
+@import '../components/row-expand/styles';
+@import '../components/tabs/styles';
+@import '../components/tabs-layout/styles';
+@import '../components/table/styles';
+@import '../components/dropdown/styles';
+
+
+html,
+body,
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
