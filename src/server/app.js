@@ -2,11 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const { argv } = require('yargs');
 const { exec } = require('child_process');
+const { apiHandler, getReposList, getCommitList, getFolderList } = require('./utils');
 
 
 const app = express();
 const port = argv.port || 8000;
-const { pathRepo } = argv;
+const { pathRepo = './test-repos/' } = argv;
 
 const dash = ':::';
 
@@ -19,20 +20,7 @@ app.use(express.json()).use(cors());
 
 app.get('/api/repos', (req, res) => {
   exec(`cd ${pathRepo} && ls -d */`, (err, out) => {
-    if (err) {
-      res.status(404).send({
-        result: err,
-      });
-    } else {
-      res.status(200).send({
-        result: out.split('\n').reduce((arr, item) => {
-          if (item.length) {
-            arr.push(item.substring(0, item.length - 1));
-          }
-          return arr;
-        }, []),
-      });
-    }
+    apiHandler(res, err, getReposList(out))
   });
 });
 
@@ -41,19 +29,7 @@ app.get('/api/repos/:repositoryId/commits/:commitHash', (req, res) => {
   const gitLogCommand = `git log --pretty=format:"%H${dash}%cd${dash}%s" ${commitHash}`;
 
   exec(`cd ${pathRepo}/${repositoryId} && ${gitLogCommand}`, (err, out = []) => {
-    if (err) {
-      res.status(404).send({
-        result: err,
-      });
-    } else {
-      res.status(200).send({
-        result: out.split('\n').map((item) => {
-          const [hash, time, message] = item.split(dash);
-
-          return { hash, time, message };
-        }),
-      });
-    }
+    apiHandler(res, err, getCommitList(out, dash))
   });
 });
 
@@ -110,18 +86,7 @@ app.get('/api/repos/(:repositoryId|:repositoryId/tree/:commitHash/:path(*))', (r
 done`;
 
   exec(`cd ${pathRepo}${repositoryId} && ${gitCommand}`, (err, out) => {
-    if (err) {
-      res.status(404).send({
-        result: err,
-      });
-    } else {
-      res.status(200).send({
-        result: out.split('\n').filter(item => item.length).map(file => {
-          const [name, hash, message, committer, updated] = file.split(dash)
-          return { name, hash, message, committer, updated }
-        })
-      });
-    }
+    apiHandler(res, err, getFolderList(out, dash))
   });
 });
 
@@ -171,4 +136,4 @@ app.post('/api/repos', (req, res) => {
 app.listen(port, () => {
   console.log(`Сервер запущен на ${port} порту`);
   console.log(`Путь до папки с репозиториями: ${pathRepo}`);
-});
+})

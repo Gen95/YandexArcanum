@@ -1,5 +1,5 @@
 import React from 'react'
-import { FolderList } from '../folder-list'
+// import { FolderList } from '../folder-list'
 const block = 'Repository-head'
 
 export const RepositoryHead = () => {
