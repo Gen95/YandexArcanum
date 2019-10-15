@@ -1,9 +1,27 @@
 import React from 'react'
+import { RouteComponentProps } from 'react-router-dom'
+
+export type SelectedItem = {
+    title: string,
+    description?: string
+}
+
+export type DropdownStateProps = {
+    selectedItem?: SelectedItem,
+    onSelect: (selectedItem: SelectedItem) => void
+    items: Array<SelectedItem>
+}
+
+type DropdownProps = Partial<RouteComponentProps> & DropdownStateProps
+
+type DropdownState = {
+    isOpen: boolean
+}
 
 const block = 'dropdown'
 
-export class Dropdown extends React.Component {
-    constructor(props) {
+export class Dropdown extends React.Component<DropdownProps, DropdownState> {
+    constructor(props: DropdownProps) {
         super(props);
         this.state = {
             isOpen: false,
@@ -22,7 +40,7 @@ export class Dropdown extends React.Component {
         })
     }
 
-    handleSelect = (selectedItem) => {
+    handleSelect = (selectedItem: SelectedItem) => {
         this.setState({ isOpen: false }, () => {
             if (this.props.onSelect) {
                 this.props.onSelect(selectedItem)
@@ -31,8 +49,9 @@ export class Dropdown extends React.Component {
     }
 
     renderPopup() {
-        const { items = [], selectedItem: { title: selectedTitle } } = this.props;
-
+        const { items = [], selectedItem } = this.props;
+        if (!selectedItem) return
+        const  { title: selectedTitle } = selectedItem;
         return <div className={`${block}__popup`}>
             <div className={`${block}__header`} />
             <div className={`${block}__list`}>
@@ -49,9 +68,9 @@ export class Dropdown extends React.Component {
     }
 
     render() {
-        const { selectedItem = {} } = this.props;
+        const { selectedItem } = this.props;
         const { isOpen } = this.state;
-
+        if (!selectedItem) return
         return <div className={`${block} ${isOpen && `${block}_open`}`}>
             <button className={`${block}__control button`} onClick={this.openPopup}>{selectedItem.title}</button>
             {isOpen && this.renderPopup()}

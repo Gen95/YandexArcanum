@@ -8,7 +8,7 @@ export const RepositoryHead = () => {
             <div className={`${block}__title`}>
                 <h1 className={`${block}__name`}>Arcanum</h1>
                 <div className={`${block}__switcher`}>
-                    <Branch-dropdown />
+                    {/*<Branch-dropdown />*/}
                 </div>
             </div>
             <div className={`${block}__info`}>Last commit 

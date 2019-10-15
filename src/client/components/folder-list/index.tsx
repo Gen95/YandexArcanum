@@ -1,20 +1,44 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { Table } from '../'
+import { Table } from '..'
 import folderIcon from '../../assets/img/folderIcon.svg';
-import { getFolderList } from '../../ajax'
+import { getFolderList } from '../../ajax';
+import { State } from '../../store';
 
-class FolderListRaw extends React.Component {
-    constructor(props) {
+type RoutingParams = {
+    commitHash: string,
+    path: string
+}
+
+type Item = {
+    name: string,
+    hash: string,
+    message: string,
+    committer: string,
+    updated: string
+}
+
+type FolderListState = {
+    folderList: Array<Item>
+}
+
+type FolderListStateProps = {
+    currentRepo: State['currentRepo']
+}
+
+type FolderListProps = RouteComponentProps<RoutingParams> & FolderListStateProps
+
+class FolderListRaw extends React.Component<FolderListProps, FolderListState> {
+    constructor(props: FolderListProps) {
         super(props);
         this.state = {
             folderList: []
         };
     };
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps: FolderListProps) {
         const { match: { params: { commitHash: prevCommitHash, path: prevPath } } } = prevProps;
         const { match: { params: { commitHash, path } }, currentRepo } = this.props;
 
@@ -25,7 +49,7 @@ class FolderListRaw extends React.Component {
         }
     }
 
-    listFormatter = (folderList) => {
+    listFormatter = (folderList: Array<Item>) => {
         const {currentRepo} = this.props;
 
         return {
@@ -45,7 +69,7 @@ class FolderListRaw extends React.Component {
                     name: 'Updated'
                 }
             ],
-            items: folderList.map((item) => ({
+            items: folderList.map((item: Item) => ({
                 name: <><img className="table__icon" src={folderIcon} alt='' />
                     <Link to={`/files/${currentRepo}/tree/${item.hash}/${item.name}`}>{item.name}</Link>
                 </>,
@@ -65,7 +89,7 @@ class FolderListRaw extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: State): FolderListStateProps => {
     return {
         currentRepo: state.currentRepo
     }

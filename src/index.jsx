@@ -6,8 +6,6 @@ import './client/styles/main.scss';
 import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 
 import { IndexPage } from './client/pages';
-import * as serviceWorker from './serviceWorker';
-
 
 ReactDOM.render(
     <Provider store={store}>
@@ -19,5 +17,3 @@ ReactDOM.render(
             </Switch>
         </Router>
     </Provider>, document.getElementById('root'));
-
-serviceWorker.unregister();

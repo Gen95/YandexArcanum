@@ -1,5 +1,5 @@
 import React from 'react';
-import {RepoDropdown} from '../';
+import {RepoDropdown} from '..';
 import logoYandex from '../../assets/img/logoYandex.svg';
 import logoArcanum from '../../assets/img/logoArcanum.svg';
 

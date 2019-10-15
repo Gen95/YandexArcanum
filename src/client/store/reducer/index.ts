@@ -1,5 +1,11 @@
+import { State } from ".."
 
-export function reducer(state = {}, action) {
+type Action = {
+  type: 'SET_REPO',
+  repoName: string
+}
+
+export function reducer(state: State = {}, action: Action) {
     switch (action.type) {
       case 'SET_REPO':
         return {

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Tabs } from '../';
+import { Tabs } from '..';
+import { TabsProps } from '../tabs'
 
-export const TabsLayout = ({ items }) => {
+export const TabsLayout = ({ items }: TabsProps) => {
     return <div className='tabs-layout'>
         <Tabs items={items} />
         <Switch>

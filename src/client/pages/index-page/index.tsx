@@ -22,8 +22,8 @@ const tabs = [
         path: '/branches',
         url: '/branches',
         title: 'BRANCHES',
-        component: <h1>BRANCHES</h1>
-
+        component: <h1>BRANCHES</h1>,
+        exact: false
     }
 ]
 
@@ -31,7 +31,6 @@ export const IndexPage = () => {
     return <PageLayout breadcrumbs={breadcrumbs}>
         <div className="page__tabs">
             <TabsLayout items={tabs} />
-            {/* <input className="js-filter" type="search" name="filter" placeholder="Поиск" /> */}
         </div>
     </PageLayout>
 }

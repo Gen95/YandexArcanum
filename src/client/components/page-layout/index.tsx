@@ -1,7 +1,12 @@
 import React from 'react';
-import { Header, Footer, RepositoryHead, Breadcrumbs } from '../';
+import { Header, Footer, RepositoryHead, Breadcrumbs, BreadcrumbsProps } from '..';
 
-export const PageLayout = ({ breadcrumbs, children }) => {
+type PageLayoutProps = {
+    breadcrumbs: BreadcrumbsProps['items'],
+    children: React.ReactNode
+}
+
+export const PageLayout = ({ breadcrumbs, children }: PageLayoutProps) => {
     return <div className='page'>
         <div className="page__header">
             <Header />
